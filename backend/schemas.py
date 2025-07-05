@@ -1,28 +1,22 @@
-"""Pydantic schemas for AI-Driven Testing backend."""
-"""Data schemas for AI-Driven Testing API."""
+"""Pydantic schemas for AI-Driven Testing API."""
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
 class ExportRequest(BaseModel):
-    """Request schema for export API endpoint."""
+    """Request model for export API endpoints."""
 
     format: str = Field(
-        ...,
-        description="Export format (json, markdown, http, txt, xml)",
+        ..., description="Export format (json, markdown, http, txt, xml)"
     )
-    content: str = Field(
-        ...,
-        description="Content to export",
-    )
+    content: str = Field(..., description="Content to export")
     filename: Optional[str] = Field(
-        None,
-        description="Optional custom filename (without extension)",
+        None, description="Optional custom filename (without extension)"
     )
 
 
 class ModelMeta(BaseModel):
-    """Model metadata schema."""
+    """Model metadata including ID and human-readable name."""
 
     id: str = Field(
         ...,
@@ -32,6 +26,8 @@ class ModelMeta(BaseModel):
 
 
 class InputOptions(BaseModel):
+    """Input options for LLM generation settings."""
+
     temperature: Optional[float] = 0.7
     num_ctx: Optional[int] = 4096
     seed: Optional[int] = 42
@@ -40,6 +36,8 @@ class InputOptions(BaseModel):
 
 
 class InputData(BaseModel):
+    """Input data containing user message, source code, and system instructions."""
+
     user_message: str = Field(
         ...,
         description="Instruction or natural language question from the user",
@@ -55,6 +53,8 @@ class InputData(BaseModel):
 
 
 class PromptData(BaseModel):
+    """Complete prompt data including model, input, modules, and metadata."""
+
     model: ModelMeta
     input: InputData
     modules: Optional[List[str]] = Field(
@@ -85,6 +85,8 @@ class PromptData(BaseModel):
 
 
 class TestExecutionResults(BaseModel):
+    """Test execution results including exit code, stdout, and stderr."""
+
     exit_code: int
     stdout: str
     stderr: str
@@ -92,6 +94,8 @@ class TestExecutionResults(BaseModel):
 
 
 class OutputData(BaseModel):
+    """Output data containing LLM response and extracted information."""
+
     markdown: str = Field(..., description="LLM response in Markdown")
     code: Optional[str] = Field(
         None, description="Cleaned code extracted from the response, if any"
@@ -125,6 +129,8 @@ class OutputData(BaseModel):
 
 
 class TimingData(BaseModel):
+    """Timing data for model operations."""
+
     loading_time: float = Field(
         ..., description="Time to load/start model container"
     )
@@ -134,6 +140,8 @@ class TimingData(BaseModel):
 
 
 class ResponseData(BaseModel):
+    """Complete response data including model, output, and timing information."""
+
     model: ModelMeta
     output: OutputData
     timing: TimingData
