@@ -1,3 +1,4 @@
+"""FastAPI application for AI-Driven Testing backend with export functionality."""
 import os
 import json
 import importlib
@@ -9,8 +10,9 @@ from fastapi.concurrency import run_in_threadpool
 from fastapi.middleware.cors import CORSMiddleware
 
 from llm_manager import LLMManager
-from schemas import PromptData, ResponseData
+from schemas import PromptData, ResponseData, ExportRequest
 import module_manager
+from export_manager import ExportManager
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
@@ -56,8 +58,8 @@ AVAILABLE_MODELS: List[Dict[str, str]] = _raw_cfg.get("models", [])
 # Helper functions for modules
 # --------------------------------------------------------------------------- #
 def discover_modules() -> List[Dict[str, str]]:
-    """
-    Automatically discover all valid modules in the modules directory.
+    """Automatically discover all valid modules in the modules directory.
+
     Returns a list of module information dictionaries.
     """
     modules_dir = os.path.join(SCRIPT_DIR, "modules")
@@ -279,4 +281,47 @@ def list_modules() -> List[Dict]:
     except Exception as exc:
         raise HTTPException(
             status_code=500, detail=f"Failed to discover modules: {str(exc)}"
+        ) from exc
+
+
+# --------------------------------------------------------------------------- #
+# Export endpoints
+# --------------------------------------------------------------------------- #
+@app.get("/export/formats")
+def get_export_formats():
+    """
+    Returns the list of supported export formats.
+    """
+    try:
+        export_manager = ExportManager()
+        return {"formats": export_manager.get_supported_formats()}
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to get export formats: {str(exc)}"
+        ) from exc
+
+
+@app.post("/export")
+def export_content(request: ExportRequest):
+    """
+    Export content in the specified format.
+    Expected request body: {"format": "json", "content": "text to export"}
+    """
+    try:
+        export_manager = ExportManager()
+        filepath = export_manager.export_content(
+            request.content, request.format, request.filename
+        )
+
+        return {
+            "success": True,
+            "format": request.format,
+            "filepath": filepath,
+            "message": f"Content exported successfully as {request.format}",
+        }
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve)) from ve
+    except Exception as exc:
+        raise HTTPException(
+            status_code=500, detail=f"Export failed: {str(exc)}"
         ) from exc

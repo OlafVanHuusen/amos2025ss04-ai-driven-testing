@@ -1,8 +1,29 @@
+"""Pydantic schemas for AI-Driven Testing backend."""
+"""Data schemas for AI-Driven Testing API."""
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
 
+class ExportRequest(BaseModel):
+    """Request schema for export API endpoint."""
+
+    format: str = Field(
+        ...,
+        description="Export format (json, markdown, http, txt, xml)",
+    )
+    content: str = Field(
+        ...,
+        description="Content to export",
+    )
+    filename: Optional[str] = Field(
+        None,
+        description="Optional custom filename (without extension)",
+    )
+
+
 class ModelMeta(BaseModel):
+    """Model metadata schema."""
+
     id: str = Field(
         ...,
         description="The model ID, e.g., 'mistral:7b-instruct-v0.3-q3_K_M'",
