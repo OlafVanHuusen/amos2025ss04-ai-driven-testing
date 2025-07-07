@@ -7,7 +7,16 @@ import warnings
 
 
 class ContextSizeCalculator(ModuleBase):
-    """Berechnet die Anzahl der Tokens in Prompts und prüft die Einhaltung der maximalen Kontextgröße."""
+    """
+    Computes the number of tokens in a prompt and ensures it fits within the model's context window.
+
+    This module runs before LLM execution and serves two main purposes:
+    1. It attempts to use a Hugging Face tokenizer (specific to the model) to compute the actual token count.
+    2. If no suitable tokenizer is found, it falls back to a heuristic-based estimation.
+
+    If the token count exceeds the maximum context size defined in the model's settings
+    (`PromptData.input.options.num_ctx`), a `ValueError` is raised to prevent runtime errors.
+    """
 
     def __init__(self):
         self.tokenizer = None

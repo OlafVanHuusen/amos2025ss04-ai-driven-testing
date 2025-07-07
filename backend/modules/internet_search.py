@@ -16,7 +16,19 @@ Answer the query based only on the following context:
 
 
 class InternetSearch(ModuleBase):
-    """Extrahiert Schlüsselwörter aus der Benutzeranfrage, führt eine DuckDuckGo-Suche durch und erweitert den ursprünglichen Prompt um relevante Inhalte."""
+    """
+    Extracts keywords from user prompt and executes a DuckDuckGo-Search to extend
+    the user prompt with relevant context.
+
+    This module enhances the prompt by:
+      - Extracting keywords from the user query using KeyBERT.
+      - Performing a DuckDuckGo search with those keywords (or using user-provided URLs).
+      - Scraping and cleaning the textual content of the top results.
+      - Injecting the retrieved context into the prompt using a template.
+
+    The enriched prompt is then passed to the model for improved, context-aware responses.
+    It also logs the sources used, and stores them in the `rag_sources` field of PromptData.
+    """
 
     def applies_before(self) -> bool:
         return True

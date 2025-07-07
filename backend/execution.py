@@ -6,9 +6,17 @@ from pathlib import Path
 
 
 def execute_prompt(active_modules, prompt_data, output_file):
-    """Execute the prompt-response flow."""
+    """
+    Executes the full prompt-response pipeline using a local LLM container.
 
-    # Process with modules
+    This function performs the following steps:
+    1. Applies preprocessing modules to the input prompt.
+    2. Starts a Docker container for the selected model via the LLMManager.
+    3. Sends the processed prompt to the model and receives the response.
+    4. Applies postprocessing modules to the response.
+    5. Saves the response as structured JSON and Markdown to archive and latest output directories.
+    """
+
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
     )
@@ -26,7 +34,7 @@ def execute_prompt(active_modules, prompt_data, output_file):
             active_modules, response_data, prompt_data
         )
 
-        # === Save output after all modules ===
+        # Save output after all modules are finished
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
         safe_model_id = prompt_data.model.id.replace(":", "_")
         archive_dir = Path("outputs/archive") / f"{timestamp}_{safe_model_id}"

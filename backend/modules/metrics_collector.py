@@ -7,7 +7,23 @@ from modules.text_converter import TextConverter
 
 
 class MetricsCollector(ModuleBase):
-    """Sammelt und speichert Performance-Metriken wie Generierungs- und Ladezeiten sowie Syntax-Validität."""
+    """
+    Collects and saves performance metrics after the model response has been generated.
+
+    This module runs after all other processing is complete. It measures and stores:
+      - Syntax validity of the generated code (via Python's `compile()` check)
+      - Loading time and generation time from the model execution
+      - Model metadata (e.g., name)
+
+    Metrics are saved in both the 'outputs/latest/' and a timestamped 'outputs/archive/' directory
+    as a 'metrics.json' file.
+
+    Dependencies:
+        - Requires TextConverter module to be executed beforehand to ensure output code is available.
+
+    Returns:
+        Updated ResponseData object with the 'syntax_valid' flag set.
+    """
 
     def __init__(self):
         self.loading_time = None
@@ -72,26 +88,13 @@ class MetricsCollector(ModuleBase):
                 with open(path, "w") as f:
                     f.write(content)
 
-    def clean_response_text(self, response_text):
-        import_index = response_text.find("import")
-        if import_index != -1:
-            response_text = response_text[import_index:]
-
-        response_text = response_text.replace("```python", "").replace(
-            "```", ""
-        )
-        for marker in ["Explanation:", "# Explanation", "This script defines"]:
-            if marker in response_text:
-                response_text = response_text.split(marker)[0]
-
-        return response_text.strip()
-
-    def check_syntax_validity(self, file_path):
+    @staticmethod
+    def check_syntax_validity(file_path):
         try:
             with open(file_path, "r") as f:
                 code = f.read()
             compile(code, str(file_path), "exec")
             return True
         except SyntaxError as e:
-            print(f"[Metrics] Syntax Error: {e}")
+            print(f"[MetricsCollector] Syntax Error: {e}")
             return False

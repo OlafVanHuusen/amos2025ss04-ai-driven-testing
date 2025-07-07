@@ -3,6 +3,15 @@ from schemas import PromptData, ResponseData
 
 
 class Timeout(ModuleBase):
+    """
+    Sets a default timeout value for the LLM request.
+
+    Behavior:
+    - Applies before the model is executed.
+    - Sets the `timeout` field in `PromptData` to 30 seconds, which can be used
+      to limit the request duration during prompt processing or model inference.
+    """
+
     def applies_before(self) -> bool:
         return True
 

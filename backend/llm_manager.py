@@ -308,7 +308,7 @@ class LLMManager:
                 r = requests.get(url)
                 if r.status_code == 200:
                     print(f"Ollama API is read on port {port}!")
-                    # Zusätzliche Wartezeit für die vollständige Initialisierung
+                    # Additional timeout to ensure complete initialization
                     time.sleep(5)
                     return
             except requests.exceptions.ConnectionError:

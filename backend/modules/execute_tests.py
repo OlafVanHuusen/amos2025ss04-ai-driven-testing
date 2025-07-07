@@ -72,6 +72,6 @@ class ExecuteTests(ModuleBase):
             return result
 
         except subprocess.TimeoutExpired:
-            return "Execution timed out."
+            return "[ExecuteTests] Execution timed out."
         except Exception as e:
-            return f"Docker execution failed: {e}"
+            return f"[ExecuteTests] Docker execution failed: {e}"

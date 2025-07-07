@@ -9,7 +9,13 @@ from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
-    # Extracts and cleans Python code from prompts and responses
+    """
+    Extracts, cleans, and saves Python code snippets from prompts and LLM responses.
+
+    This module performs preprocessing and postprocessing on prompt and response data
+    by identifying Python code blocks (typically embedded in Markdown), formatting them,
+    and writing them to Python files for downstream execution or evaluation.
+    """
 
     preprocessing_order = 1
     postprocessing_order = 1

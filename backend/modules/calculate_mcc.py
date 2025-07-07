@@ -32,9 +32,9 @@ class CalculateMcc(ModuleBase):
 
         try:
             mcc = get_code_complexity_sum(prompt, filename="stdin")
-            print("Calculated MCC:", mcc)
+            print("[CalculateMCC] Calculated MCC:", mcc)
         except Exception as e:
-            print(f"Could not calculate MCC for prompt: {e}")
+            print(f"[CalculateMCC] Could not calculate MCC for prompt: {e}")
             mcc = None
 
         prompt_data.mcc_complexity = mcc
@@ -54,9 +54,9 @@ class CalculateMcc(ModuleBase):
 
         try:
             mcc = get_code_complexity_sum(code, filename="stdin")
-            print("Calculated MCC:", mcc)
+            print("[CalculateMCC] Calculated MCC:", mcc)
         except Exception as e:
-            print(f"Could not calculate MCC for response: {e}")
+            print(f"[CalculateMCC] Could not calculate MCC for response: {e}")
             mcc = None
 
         response_data.output.mcc_complexity = mcc
@@ -68,7 +68,9 @@ def get_code_complexity_sum(code, filename="stdin"):
         tree = compile(code, filename, "exec", ast.PyCF_ONLY_AST)
     except SyntaxError:
         e = sys.exc_info()[1]
-        sys.stderr.write("Unable to parse %s: %s\n" % (filename, e))
+        sys.stderr.write(
+            "[CalculateMCC] Unable to parse %s: %s\n" % (filename, e)
+        )
         return 0
 
     visitor = PathGraphingAstVisitor()

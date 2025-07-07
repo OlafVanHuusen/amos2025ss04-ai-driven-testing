@@ -15,13 +15,13 @@ class ExampleLogger(ModuleBase):
         return []
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
-        print("[Logger] Prompt being sent:")
+        print("[ExampleLogger] Prompt being sent:")
         print(prompt_data.input)
         return prompt_data
 
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        print("[Logger] Response received:")
+        print("[ExampleLogger] Response received:")
         print(response_data.output)
         return response_data

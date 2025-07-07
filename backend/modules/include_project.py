@@ -26,7 +26,20 @@ Answer the query based only on the following context:
 
 
 class IncludeProject(ModuleBase):
-    """RAG-Modul das ein GitHub-Repository klont und Projektkontext über Vektor-Suche in Prompts integriert."""
+    """
+    A retrieval-augmented generation (RAG) module that clones a GitHub project and integrates project context
+    into prompts via semantic vector search.
+
+    Behavior:
+    - Before LLM execution:
+        1. Clones a GitHub repository and loads both local and remote project files.
+        2. Splits the documents into context-sized chunks.
+        3. Embeds and stores them in a Chroma vector database (with optional reset).
+        4. Queries the database to find the most relevant chunks for the user's question.
+        5. Constructs a new prompt that includes the retrieved context.
+    - After LLM execution:
+        - Cleans up the local Chroma DB and cloned repo to avoid stale state.
+    """
 
     def applies_before(self) -> bool:
         return True
@@ -39,7 +52,7 @@ class IncludeProject(ModuleBase):
         reset = getattr(prompt_data, "reset", False)
 
         if reset:
-            print("✨ Clearing database")
+            print("[IncludeProject] Clearing database")
             self.clear_database()
 
         documents = self.load_documents()
@@ -61,21 +74,23 @@ class IncludeProject(ModuleBase):
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        print("\n🧹 Cleaning up...")
+        print("\n[IncludeProject] Cleaning up...")
         if os.path.exists(CHROMA_PATH):
             shutil.rmtree(CHROMA_PATH)
         if CLONE_PATH.exists():
             shutil.rmtree(CLONE_PATH)
         # If you need to stop the model container, you may need to pass manager/model_id here
-        print("✅ Cleanup complete")
+        print("[IncludeProject] Cleanup complete")
         return response_data
 
     def load_documents(self):
         # Always re-clone the GitHub repo to ensure it's up to date
         if CLONE_PATH.exists():
-            print(f"Removing existing cloned repo at {CLONE_PATH}...")
+            print(
+                f"[IncludeProject] Removing existing cloned repo at {CLONE_PATH}..."
+            )
             shutil.rmtree(CLONE_PATH)
-        print(f"Cloning GitHub repo to {CLONE_PATH}...")
+        print(f"[IncludeProject] Cloning GitHub repo to {CLONE_PATH}...")
         subprocess.run(
             ["git", "clone", GITHUB_REPO_URL, str(CLONE_PATH)],
             check=True,
@@ -98,7 +113,7 @@ class IncludeProject(ModuleBase):
             try:
                 documents.extend(loader.load())
             except Exception as e:
-                print(f"Error loading documents: {e}")
+                print(f"[IncludeProject] Error loading documents: {e}")
         return documents
 
     def split_documents(self, documents: list[Document]):
@@ -115,7 +130,7 @@ class IncludeProject(ModuleBase):
         # Always use nomic-embed-text for embeddings
         embedding_model = "nomic-embed-text"
         print(
-            f"Using OllamaEmbeddings for embeddings with model: {embedding_model}"
+            f"[IncludeProject] Using OllamaEmbeddings for embeddings with model: {embedding_model}"
         )
         return OllamaEmbeddings(model=embedding_model)
 
@@ -132,7 +147,9 @@ class IncludeProject(ModuleBase):
             include=[]
         )  # IDs are always included by default
         existing_ids = set(existing_items["ids"])
-        print(f"Number of existing documents in DB: {len(existing_ids)}")
+        print(
+            f"[IncludeProject] Number of existing documents in DB: {len(existing_ids)}"
+        )
 
         # Only add documents that don't exist in the DB.
         new_chunks = [
@@ -141,7 +158,7 @@ class IncludeProject(ModuleBase):
             if chunk.metadata["id"] not in existing_ids
         ]
         if len(new_chunks):
-            print(f"👉 Adding new documents: {len(new_chunks)}")
+            print(f"[IncludeProject] Adding new documents: {len(new_chunks)}")
             new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
             db.add_documents(new_chunks, ids=new_chunk_ids)
         return db
