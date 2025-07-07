@@ -29,8 +29,8 @@ export interface response {
   output: {
     code: string | null;
     syntax_valid: boolean | null;
-    ccc_complexity: number | null;
-    mcc_complexity: number | null;
+    ccc_complexity_output: number | null;
+    mcc_complexity_output: number | null;
     lm_eval: unknown | null;
   };
   timing: {
@@ -39,9 +39,8 @@ export interface response {
   };
   prompt_data: {
     token_count: number | null;
-    token_count_estimated: number | null;
-    ccc_complexity: number | null;
-    mcc_complexity: number | null;
+    ccc_complexity_input: number | null;
+    mcc_complexity_input: number | null;
     rag_sources: unknown | null;
   };
 }

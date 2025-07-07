@@ -3,6 +3,7 @@ from schemas import PromptData, ResponseData
 
 
 class Timeout(ModuleBase):
+    '''Dieses Modul setzt ein Timeout für die Verarbeitung von Prompts (30 Sekunden).'''
     def applies_before(self) -> bool:
         return True
 

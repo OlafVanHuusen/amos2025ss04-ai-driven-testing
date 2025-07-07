@@ -77,10 +77,11 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, loading = false }) 
   msg.response?.modules_used.length > 0 &&
   (
     msg.response?.output?.syntax_valid !== undefined ||
-    msg.response?.output?.ccc_complexity !== undefined ||
-    msg.response?.output?.mcc_complexity !== undefined ||
-    msg.response?.prompt_data?.token_count !== undefined ||
-    msg.response?.prompt_data?.token_count_estimated !== undefined
+    msg.response?.output?.ccc_complexity_output !== undefined ||
+    msg.response?.output?.mcc_complexity_output !== undefined ||
+    msg.response?.prompt_data?.ccc_complexity_input !== undefined ||
+    msg.response?.prompt_data?.mcc_complexity_input !== undefined ||
+    msg.response?.prompt_data?.token_count !== undefined
   ) && (
     <Accordion sx={{ mt: 2 }} elevation={0}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -97,28 +98,30 @@ const ChatHistory: React.FC<ChatHistoryProps> = ({ messages, loading = false }) 
       Syntax valid: {String(msg.response.output.syntax_valid)}
     </Typography>
   )}
-
-  {msg.response?.output?.ccc_complexity != null  && (
+  {msg.response?.prompt_data?.ccc_complexity_input != null  && (
     <Typography variant="body2">
-      CCC Complexity: {msg.response.output.ccc_complexity}
+      CCC Complexity (Input): {msg.response.prompt_data?.ccc_complexity_input}
     </Typography>
   )}
-
-  {msg.response?.output?.mcc_complexity != null  && (
+  {msg.response?.output?.mcc_complexity_output != null  && (
     <Typography variant="body2">
-      MCC Complexity: {msg.response.output.mcc_complexity}
+      MCC Complexity (Input): {msg.response.prompt_data?.mcc_complexity_input}
+    </Typography>
+  )}
+  {msg.response?.output?.ccc_complexity_output != null  && (
+    <Typography variant="body2">
+      CCC Complexity (Output): {msg.response.output.ccc_complexity_output}
+    </Typography>
+  )}
+  {msg.response?.output?.mcc_complexity_output != null  && (
+    <Typography variant="body2">
+      MCC Complexity (Output): {msg.response.output.mcc_complexity_output}
     </Typography>
   )}
 
   {msg.response?.prompt_data?.token_count != null && (
     <Typography variant="body2">
       Token count: {msg.response.prompt_data.token_count}
-    </Typography>
-  )}
-
-  {msg.response?.prompt_data?.token_count_estimated != null && (
-    <Typography variant="body2">
-      Estimated tokens: {msg.response.prompt_data.token_count_estimated}
     </Typography>
   )}
 </Box>

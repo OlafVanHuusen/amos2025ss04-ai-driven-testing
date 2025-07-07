@@ -18,6 +18,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSend, onFileUpload }) => {
     if (!input.trim()) return;
     onSend(input);
     setInput('');
+    setUploadedFileNames([])
   };
 
 const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
