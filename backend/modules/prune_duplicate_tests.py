@@ -9,7 +9,12 @@ from modules.text_converter import (
 
 
 class PruneDuplicateTests(ModuleBase):
-    """Executes the generated prompt and response code (typically unittests)."""
+    """ "
+    Modul zur Bereinigung von duplizierten Testfunktionen und assert-Anweisungen im generierten Code.
+
+    Dieses Modul wird nach der Ausführung des LLMs verwendet und überprüft die generierte Antwortdatei
+    (typischerweise `response.py`) auf doppelte Testfunktionen und doppelte `assert`-Statements.
+    """
 
     postprocessing_order = 30
 

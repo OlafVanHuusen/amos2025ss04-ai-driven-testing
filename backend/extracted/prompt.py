@@ -1,11 +1,5 @@
 """Simple command-line calculator application.
 
-This module provides a calculator function that interactively prompts the user
-for input values and an operator, then performs the requested arithmetic
-operation and displays the result.
-"""
-
-
 def calculator():
     """Run an interactive command-line calculator.
 

@@ -2,7 +2,6 @@ import sys
 from pathlib import Path
 sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path
 from prompt import *  # Import functions from prompt.py
-
 import pytest  # required for pytest
 import math  # required for math functions
 from calculator import (
