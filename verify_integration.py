@@ -79,7 +79,9 @@ def verify_frontend_files():
             if "coverage_data" in content:
                 print("✅ coverage_data field added to frontend/src/api.ts")
             else:
-                print("❌ coverage_data field not found in frontend/src/api.ts")
+                print(
+                    "❌ coverage_data field not found in frontend/src/api.ts"
+                )
                 return False
     else:
         print(f"❌ Missing: {api_types_path}")
@@ -199,7 +201,9 @@ def main():
     print("\n📊 Verification Summary")
     print("=" * 30)
     print(f"Backend Implementation: {'✅ PASS' if backend_ok else '❌ FAIL'}")
-    print(f"Frontend Implementation: {'✅ PASS' if frontend_ok else '❌ FAIL'}")
+    print(
+        f"Frontend Implementation: {'✅ PASS' if frontend_ok else '❌ FAIL'}"
+    )
     print(f"Integration Points: {'✅ PASS' if integration_ok else '❌ FAIL'}")
 
     if backend_ok and frontend_ok and integration_ok:
