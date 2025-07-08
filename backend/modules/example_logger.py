@@ -4,11 +4,11 @@ from schemas import PromptData, ResponseData
 
 class ExampleLogger(ModuleBase):
     """
-    Logging module that prints prompt inputs and model responses to the console.
+    Logging-Modul, das die Eingabeaufforderungen (Prompts) und Modellantworten in der Konsole ausgibt.
 
-    This module is primarily intended for debugging and transparency during development.
-    It logs the content of the prompt before sending it to the model and the output
-    returned by the model after inference.
+    Dieses Modul dient hauptsächlich der Fehlersuche und Transparenz während der Entwicklung.
+    Es protokolliert den Inhalt des Prompts, bevor er an das Modell gesendet wird, sowie die Ausgabe,
+    die nach der Inferenz vom Modell zurückgegeben wird.
     """
 
     def applies_before(self) -> bool:

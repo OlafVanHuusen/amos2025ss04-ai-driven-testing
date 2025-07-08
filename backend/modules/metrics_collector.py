@@ -8,21 +8,21 @@ from modules.text_converter import TextConverter
 
 class MetricsCollector(ModuleBase):
     """
-    Collects and saves performance metrics after the model response has been generated.
+    Sammelt und speichert Leistungsmetriken, nachdem die Modellantwort generiert wurde.
 
-    This module runs after all other processing is complete. It measures and stores:
-      - Syntax validity of the generated code (via Python's `compile()` check)
-      - Loading time and generation time from the model execution
-      - Model metadata (e.g., name)
+    Dieses Modul wird nach Abschluss aller anderen Verarbeitungsschritte ausgeführt. Es misst und speichert:
+      - Die syntaktische Gültigkeit des generierten Codes (über einen `compile()`-Check in Python)
+      - Die Ladezeit und Generierungszeit während der Modellausführung
+      - Metadaten des verwendeten Modells (z. B. Modellname)
 
-    Metrics are saved in both the 'outputs/latest/' and a timestamped 'outputs/archive/' directory
-    as a 'metrics.json' file.
+    Die Metriken werden als 'metrics.json' sowohl im Verzeichnis 'outputs/latest/' als auch in einem
+    zeitgestempelten Archiv unter 'outputs/archive/' gespeichert.
 
-    Dependencies:
-        - Requires TextConverter module to be executed beforehand to ensure output code is available.
+    Abhängigkeiten:
+        - Erfordert, dass das TextConverter-Modul zuvor ausgeführt wurde, um sicherzustellen, dass der generierte Code verfügbar ist.
 
-    Returns:
-        Updated ResponseData object with the 'syntax_valid' flag set.
+    Rückgabewert:
+        Aktualisiertes `ResponseData`-Objekt mit gesetztem 'syntax_valid'-Flag.
     """
 
     def __init__(self):

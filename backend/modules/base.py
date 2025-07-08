@@ -4,29 +4,29 @@ from schemas import PromptData, ResponseData
 
 class ModuleBase(ABC):
     """
-    Abstract base class for all processing modules in the LLM execution pipeline.
+    Abstrakte Basisklasse für alle Verarbeitungsmodule in der Ausführungspipeline eines LLMs (Large Language Models).
 
-    Modules can hook into two stages of the prompt-response lifecycle:
-    - Before the prompt is sent to the language model
-    - After the response is received from the model
+    Module können sich in zwei Phasen des Prompt-Antwort-Zyklus einklinken:
+    - Bevor der Prompt an das Sprachmodell gesendet wird
+    - Nachdem die Antwort vom Modell empfangen wurde
 
-    Subclasses can:
-    - Define whether they apply before and/or after LLM execution.
-    - Modify or enrich the prompt (`process_prompt`).
-    - Analyze or transform the model response (`process_response`).
-    - Declare dependencies on other modules to enforce execution order.
+    Unterklassen können:
+    - Festlegen, ob sie vor und/oder nach der Ausführung des LLMs angewendet werden.
+    - Den Prompt verändern oder erweitern (`process_prompt`).
+    - Die Antwort des Modells analysieren oder transformieren (`process_response`).
+    - Abhängigkeiten zu anderen Modulen deklarieren, um die Ausführungsreihenfolge sicherzustellen.
 
-    Usage:
-        All custom modules must inherit from this class and implement at least
-        `applies_before()` and/or `applies_after()`.
+    Verwendung:
+        Alle benutzerdefinierten Module müssen von dieser Klasse erben und mindestens
+        `applies_before()` und/oder `applies_after()` implementieren.
 
-    Default behavior (optional overrides):
-        - `dependencies()`: declare other modules that must run before this one.
-        - `process_prompt()`: modify or inspect the prompt before it's sent.
-        - `process_response()`: modify or inspect the model's response after it's received.
+    Standardverhalten (kann überschrieben werden):
+        - `dependencies()`: Gibt andere Module an, die vor diesem Modul ausgeführt werden müssen.
+        - `process_prompt()`: Modifiziert oder inspiziert den Prompt vor dem Absenden.
+        - `process_response()`: Modifiziert oder inspiziert die Modellantwort nach dem Empfang.
 
-    Returns:
-        Modified `PromptData` and/or `ResponseData` objects as appropriate.
+    Rückgabe:
+        Angepasste `PromptData`- und/oder `ResponseData`-Objekte, je nach Phase.
     """
 
     @abstractmethod

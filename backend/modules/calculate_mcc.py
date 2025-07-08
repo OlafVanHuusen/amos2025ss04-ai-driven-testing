@@ -9,18 +9,12 @@ from modules.text_converter import TextConverter
 
 class CalculateMcc(ModuleBase):
     """
-    Module for calculating the McCabe Cyclomatic Complexity (MCC) of Python code using AST analysis.
+    Modul zur Berechnung der McCabe Cyclomatic Complexity (MCC) von Python-Code mittels AST-Analyse.
 
-    This module analyzes both the input (prompt) and output (response) Python code to determine
-    their cyclomatic complexity—a measure of code complexity based on the number of independent
-    paths through the source code. The complexity is computed using abstract syntax tree (AST) traversal.
-
-    Features:
-    - Executes both before and after model inference.
-    - Extracts code either from file paths (if available) or directly from data fields.
-    - Uses AST-based analysis to calculate total MCC via `get_code_complexity_sum`.
-    - Handles and logs exceptions during parsing or complexity calculation.
-    - Stores the MCC value in `prompt_data.mcc_complexity` and `response_data.output.mcc_complexity`.
+    Dieses Modul analysiert sowohl den Eingabecode (Prompt) als auch den vom Modell generierten
+    Ausgabecode (Response), um deren zyklomatische Komplexität zu bestimmen – ein Maß für die
+    Komplexität eines Programms basierend auf der Anzahl unabhängiger Ausführungspfade im Code.
+    Die Berechnung erfolgt durch Traversierung des abstrakten Syntaxbaums (AST).
     """
 
     preprocessing_order = 5

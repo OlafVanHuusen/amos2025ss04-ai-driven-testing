@@ -9,26 +9,11 @@ from schemas import PromptData, ResponseData
 
 class LmEvalRunner(ModuleBase):
     """
-    Runs HumanEval code benchmarks using the `lm_eval` framework and collects performance metrics.
+    Führt HumanEval-Code-Benchmarks mit dem `lm_eval`-Framework durch und sammelt Leistungsmetriken.
 
-    This module executes after the model response is generated. It launches a subprocess to run the
-    `lm_eval` benchmark (with the HumanEval task) against a reference Hugging Face model, and records
-    the evaluation results (e.g., pass@1 score).
-
-    Outputs:
-        - Raw benchmark results saved to timestamped JSON files in `outputs/human_eval/`.
-        - Aggregated evaluation metrics written to `metrics.json` in the same directory.
-        - Results added to `ResponseData.output.lm_eval`.
-
-    Notes:
-        - The benchmarked model is *not* the same as the locally running LLM; the HF model ID is hardcoded.
-        - For safety, code execution is explicitly allowed via `HF_ALLOW_CODE_EVAL`.
-
-    Raises:
-        - subprocess.CalledProcessError if the evaluation subprocess fails.
-
-    Dependencies:
-        - lm_eval must be installed and available in the system path.
+    Dieses Modul wird nach der Generierung der Modellantwort ausgeführt. Es startet einen Subprozess,
+    um das `lm_eval`-Benchmarking (mit der HumanEval-Aufgabe) gegen ein festgelegtes Hugging-Face-Modell
+    durchzuführen und zeichnet die Ergebnisse der Auswertung auf (z. B. pass@1-Score).
     """
 
     def __init__(self):

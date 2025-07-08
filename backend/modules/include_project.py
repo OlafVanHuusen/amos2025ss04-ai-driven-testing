@@ -27,18 +27,19 @@ Answer the query based only on the following context:
 
 class IncludeProject(ModuleBase):
     """
-    A retrieval-augmented generation (RAG) module that clones a GitHub project and integrates project context
-    into prompts via semantic vector search.
+    Ein Retrieval-Augmented-Generation-(RAG)-Modul, das ein GitHub-Projekt klont und dessen Kontext
+    mittels semantischer Vektorsuche in die Prompts integriert.
 
-    Behavior:
-    - Before LLM execution:
-        1. Clones a GitHub repository and loads both local and remote project files.
-        2. Splits the documents into context-sized chunks.
-        3. Embeds and stores them in a Chroma vector database (with optional reset).
-        4. Queries the database to find the most relevant chunks for the user's question.
-        5. Constructs a new prompt that includes the retrieved context.
-    - After LLM execution:
-        - Cleans up the local Chroma DB and cloned repo to avoid stale state.
+    Verhalten:
+    - Vor der LLM-Ausführung:
+        1. Klont ein GitHub-Repository und lädt Dateien sowohl lokal als auch aus dem geklonten Projekt.
+        2. Teilt die Dokumente in kontextgerechte Chunks auf.
+        3. Erstellt Embeddings und speichert sie in einer Chroma-Vektordatenbank (optional mit Reset).
+        4. Führt eine semantische Suche durch, um die relevantesten Chunks für die Benutzeranfrage zu finden.
+        5. Konstruiert ein neues Prompt, das den gefundenen Kontext enthält.
+
+    - Nach der LLM-Ausführung:
+        - Löscht die lokale Chroma-Datenbank und das geklonte Repository, um veraltete Zustände zu vermeiden.
     """
 
     def applies_before(self) -> bool:

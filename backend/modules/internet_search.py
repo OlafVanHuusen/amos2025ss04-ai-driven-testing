@@ -17,17 +17,17 @@ Answer the query based only on the following context:
 
 class InternetSearch(ModuleBase):
     """
-    Extracts keywords from user prompt and executes a DuckDuckGo-Search to extend
-    the user prompt with relevant context.
+    Extrahiert Schlüsselwörter aus dem Benutzerprompt und führt eine DuckDuckGo-Suche durch,
+    um den Prompt mit relevantem Kontext anzureichern.
 
-    This module enhances the prompt by:
-      - Extracting keywords from the user query using KeyBERT.
-      - Performing a DuckDuckGo search with those keywords (or using user-provided URLs).
-      - Scraping and cleaning the textual content of the top results.
-      - Injecting the retrieved context into the prompt using a template.
+    Dieses Modul erweitert den Prompt durch:
+      - Extraktion von Schlüsselwörtern aus der Benutzeranfrage mithilfe von KeyBERT.
+      - Durchführung einer DuckDuckGo-Suche mit diesen Schlüsselwörtern (oder mit vom Nutzer bereitgestellten URLs).
+      - Scraping und Bereinigung der Textinhalte aus den obersten Suchergebnissen.
+      - Einfügen des abgerufenen Kontexts in den Prompt mithilfe einer Vorlage.
 
-    The enriched prompt is then passed to the model for improved, context-aware responses.
-    It also logs the sources used, and stores them in the `rag_sources` field of PromptData.
+    Der angereicherte Prompt wird anschließend an das Modell übergeben, um kontextbewusstere Antworten zu ermöglichen.
+    Zusätzlich werden die verwendeten Quellen protokolliert und im Feld `rag_sources` von `PromptData` gespeichert.
     """
 
     def applies_before(self) -> bool:

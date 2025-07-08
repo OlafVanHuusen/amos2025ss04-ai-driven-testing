@@ -1,14 +1,14 @@
- """
-    Executes the full prompt-response pipeline using a local LLM container, 
-    with optional iterations for refinement.
+"""
+Executes the full prompt-response pipeline using a local LLM container,
+with optional iterations for refinement.
 
-    This function performs the following steps:
-    1. Applies preprocessing modules to the input prompt.
-    2. Starts a Docker container for the selected model via the LLMManager.
-    3. Sends the processed prompt to the model and receives the response.
-    4. Applies postprocessing modules to the response.
-    5. Saves the response as structured JSON and Markdown to archive and latest output directories.
-    """
+This function performs the following steps:
+1. Applies preprocessing modules to the input prompt.
+2. Starts a Docker container for the selected model via the LLMManager.
+3. Sends the processed prompt to the model and receives the response.
+4. Applies postprocessing modules to the response.
+5. Saves the response as structured JSON and Markdown to archive and latest output directories.
+"""
 
 import module_manager
 from llm_manager import LLMManager

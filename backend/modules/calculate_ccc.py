@@ -13,17 +13,12 @@ from modules.text_converter import TextConverter
 
 class CalculateCcc(ModuleBase):
     """
-    Module for calculating the Cognitive Code Complexity (CCC) of both source and output code.
+    Modul zur Berechnung der Cognitive Code Complexity (CCC) für Quell- und Ausgabecode.
 
-    This class integrates into a processing pipeline to automatically evaluate the complexity
-    of code provided in a prompt (input) and the generated response (output). CCC is a metric
-    that aims to quantify the cognitive effort required to understand a piece of code.
-
-    Key Features:
-    - Calculates CCC before and after model inference (both prompt and response).
-    - Uses a Python-specific CCC calculator when possible, and falls back to a general estimator if needed.
-    - Adds the resulting CCC value to the respective data dictionary (`prompt_data` or `response_data`).
-    - Issues warnings if source or output code is missing or if the CCC calculation fails.
+    Diese Klasse ist in eine Verarbeitungspipeline integriert und berechnet automatisch
+    die kognitive Komplexität von Code, der im Prompt (Eingabe) oder als Antwort (Ausgabe)
+    vom Modell generiert wurde. CCC ist ein Metrik, die den kognitiven Aufwand quantifiziert,
+    der zum Verstehen eines Codes nötig ist.
     """
 
     preprocessing_order = 5

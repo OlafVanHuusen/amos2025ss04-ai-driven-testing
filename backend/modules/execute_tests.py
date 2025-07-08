@@ -7,7 +7,14 @@ from schemas import PromptData, ResponseData, TestExecutionResults
 
 
 class ExecuteTests(ModuleBase):
-    """Executes the generated prompt and response code (typically unittests)."""
+    """
+    Führt den generierten Prompt- und Antwort-Code aus (typischerweise Unittests).
+
+    Dieses Modul wird in der Nachbearbeitungsphase ausgeführt und ist dafür zuständig,
+    den generierten Python-Code innerhalb einer Docker-Umgebung auszuführen, um z. B. Unittests
+    zu testen. Dabei wird die Ausführungsergebnis wie Rückgabecode, Standardausgabe und Fehlerausgabe
+    gespeichert und dem Antwortobjekt hinzugefügt.
+    """
 
     postprocessing_order = 90  # Run late in the chain
 
