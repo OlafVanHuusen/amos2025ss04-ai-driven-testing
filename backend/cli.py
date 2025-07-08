@@ -1,4 +1,5 @@
 """Command-line interface module for AI-Driven Testing with export support."""
+
 import os
 import argparse
 from model_manager import load_models
@@ -156,7 +157,9 @@ def validate_export_args(args: argparse.Namespace) -> None:
         supported_formats = export_manager.get_supported_formats()
 
         if args.export_format and args.export_format not in supported_formats:
-            print(f"❌ Error: Unsupported export format '{args.export_format}'")
+            print(
+                f"❌ Error: Unsupported export format '{args.export_format}'"
+            )
             print(f"📋 Supported formats: {', '.join(supported_formats)}")
             exit(1)
 
