@@ -3,7 +3,13 @@ from schemas import PromptData, ResponseData
 
 
 class ExampleLogger(ModuleBase):
-    """Einfaches Logging-Modul das Prompt-Eingaben und Antworten in der Konsole ausgibt."""
+    """
+    Logging-Modul, das die Eingabeaufforderungen (Prompts) und Modellantworten in der Konsole ausgibt.
+
+    Dieses Modul dient hauptsächlich der Fehlersuche und Transparenz während der Entwicklung.
+    Es protokolliert den Inhalt des Prompts, bevor er an das Modell gesendet wird, sowie die Ausgabe,
+    die nach der Inferenz vom Modell zurückgegeben wird.
+    """
 
     def applies_before(self) -> bool:
         return True
@@ -15,13 +21,13 @@ class ExampleLogger(ModuleBase):
         return []
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
-        print("[Logger] Prompt being sent:")
+        print("[ExampleLogger] Prompt being sent:")
         print(prompt_data.input)
         return prompt_data
 
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData
     ) -> ResponseData:
-        print("[Logger] Response received:")
+        print("[ExampleLogger] Response received:")
         print(response_data.output)
         return response_data

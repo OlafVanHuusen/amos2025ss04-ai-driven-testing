@@ -12,7 +12,14 @@ from schemas import PromptData, ResponseData
 
 
 class CleanOutputCode(ModuleBase):
-    """Module that ensures outputted test code runs without errors by fixing common issues and using LLM for complex fixes."""
+    """
+    Modul zur automatischen Bereinigung und Reparatur von generiertem Testcode.
+
+    Dieses Modul wird nach der Codeausführung verwendet, um sicherzustellen, dass der generierte
+    Ausgabecode (z. B. Tests) fehlerfrei ausführbar ist. Es überprüft die Testergebnisse
+    (von ExecuteTests) und greift bei Fehlern ein, indem es häufige Probleme direkt behebt oder
+    den LLM iterativ zur Korrektur nutzt.
+    """
 
     postprocessing_order = (
         95  # Run after ExecuteTests (90) to use its execution results

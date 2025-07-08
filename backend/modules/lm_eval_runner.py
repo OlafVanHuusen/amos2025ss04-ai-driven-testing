@@ -8,7 +8,13 @@ from schemas import PromptData, ResponseData
 
 
 class LmEvalRunner(ModuleBase):
-    """Führt HumanEval Code-Benchmarks mit dem lm_eval Framework aus und sammelt Leistungsmetriken."""
+    """
+    Führt HumanEval-Code-Benchmarks mit dem `lm_eval`-Framework durch und sammelt Leistungsmetriken.
+
+    Dieses Modul wird nach der Generierung der Modellantwort ausgeführt. Es startet einen Subprozess,
+    um das `lm_eval`-Benchmarking (mit der HumanEval-Aufgabe) gegen ein festgelegtes Hugging-Face-Modell
+    durchzuführen und zeichnet die Ergebnisse der Auswertung auf (z. B. pass@1-Score).
+    """
 
     def __init__(self):
         self.output_dir = Path("outputs/human_eval")
