@@ -20,6 +20,32 @@ python main.py --model 0 --modules example_logger execute_tests calculate_ccc
 
 ---
 
+### Available Modules
+
+**Pre**-execution means the module acts before the prompt to the LLM, likely analyzing the input.
+
+**Post**-execution means the module works after the prompt to the LLM, ergo on the output.
+
+
+| Module | Description | Pre | Post | Additional Information |
+|--------|-------------|:---:|:----:|------------------------|
+| `calculate_ccc` | Calculates Cognitive Code Complexity (CCC) for code | ✅ | ✅ | Quantifies cognitive effort needed to understand code.  |
+| `calculate_mcc` | Calculates McCabe Cyclomatic Complexity for Python code | ✅ | ✅ | Measures complexity based on number of independent execution paths in code. Uses AST analysis and requires valid Python syntax. |
+| `clean_output_code` | Automatically fixes and repairs generated test code | ❌ | ✅ | Runs multiple iterations providing the LLM with syntax and runtime error information. |
+| `context_size_calculator` | Checks prompt size against model context limits | ✅ | ❌ | Prevents token limit overflows before sending to the model. Uses the models tokenizers when available or falls back to heuristic estimation. |
+| `example_logger` | Simple logging module for demonstrating the usage of modules | ✅ | ✅ | |
+| `execute_tests` | Executes generated code (typically unit tests) | ❌ | ✅ | Runs Python code in a controlled environment and captures results. Uses Docker for isolated execution with proper error handling. |
+| `include_project` | RAG module that includes a GitHub project context | ✅ | ❌ | Clones repositories and provides relevant code context to the model. Uses vector embeddings for semantic retrieval of similar code snippets. |
+| `internet_search` | Performs DuckDuckGo searches to augment prompts | ✅ | ❌ | Extracts keywords from user queries to find relevant information online. Enriches prompts with web content to improve model responses. |
+| `lm_eval_runner` | Runs HumanEval benchmarks with LM-eval framework | ❌ | ✅ | Evaluates model performance on standardized coding tasks. Stores output files in outputs/human_eval. |
+| `metrics_collector` | Collects and stores performance metrics | ❌ | ✅ | Records syntax validity, loading times, and generation times. Stores results as JSON files in both latest and archived outputs directories. |
+| `prune_duplicate_tests` | Removes duplicate test functions and assertions | ❌ | ✅ | Improves quality of generated test code by eliminating redundancy. Uses code similarity detection to identify and remove duplicates. |
+| `show_control_flow` | Visualizes code as control flow graphs | ✅ | ✅ | Generates SVG diagrams showing execution paths and decision points. Stores the visualisation files under outputs/control_flow. |
+| `text_converter` | Extracts and cleans Python code from responses | ✅ | ✅ | Extracts code blocks from markdown responses and formats them with Black. Core module that saves processed code to files for other modules to use. |
+| `timeout` | Sets a default timeout for LLM requests | ✅ | ❌ | Prevents hanging on slow or non-responsive model queries. Default value is 30 seconds but can be adjusted as needed.
+
+---
+
 ### 🧱 Module Structure
 
 Each module must:
@@ -121,4 +147,4 @@ class ModuleBase(ABC):
 
 ```bash
 python main.py --modules my_module
-``` 
+```
