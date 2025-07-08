@@ -121,7 +121,7 @@ class CleanOutputCode(ModuleBase):
                     "python3",
                     str(Path(__file__).parent.parent / "main.py"),
                     "--model",
-                    str(6),  # Using model 6 (qwen3)
+                    str(4),  # Using model 4 (qwen3)
                     "--prompt_file",
                     temp_user_msg_path,
                     "--source_code",
