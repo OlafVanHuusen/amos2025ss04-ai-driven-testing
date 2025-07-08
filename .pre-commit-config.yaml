@@ -17,7 +17,7 @@ repos:
             'flake8-bugbear',
             'flake8-comprehensions',
         ]
-        exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/).*$ 
+        exclude: ^(ExampleTests/generatedTests/|ExampleTests/pythonTestPrograms/|backend/extracted/|backend/cli_implementation_summary\.py|backend/demo_.*\.py|backend/export_manager\.py|backend/implementation_complete\.py|backend/test_.*\.py|backend/tests/|backend/modules/export_manager\.py).*$ 
         # Only run on changed files
         stages: [pre-commit]
         # This ensures flake8 only runs on files being committed

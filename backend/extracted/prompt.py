@@ -1,5 +1,6 @@
 """Performs basic arithmetic operations."""
 
+
 def calculate_result(a, b, op):
     pass
 
