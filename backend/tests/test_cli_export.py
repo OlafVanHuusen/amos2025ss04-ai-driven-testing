@@ -24,7 +24,7 @@ def test_cli_export():
     ]
 
     for i, test_args in enumerate(test_cases):
-        print(f"\n--- Test Case {i+1}: {' '.join(test_args[1:])} ---")
+        print(f"\n--- Test Case {i + 1}: {' '.join(test_args[1:])} ---")
 
         # Save original argv
         original_argv = sys.argv.copy()
