@@ -147,9 +147,7 @@ class ContextSizeCalculator(ModuleBase):
         """
         model_mapping = {
             "mistral:7b-instruct-v0.3-q3_K_M": "mistralai/Mistral-7B-Instruct-v0.3",
-            "deepseek-coder:6.7b-instruct-q3_K_M": "deepseek-ai/deepseek-coder-6.7b-instruct",
             "qwen2.5-coder:3b-instruct-q8_0": "Qwen/Qwen2.5-Coder-3B-Instruct",
-            "gemma3:4b-it-q4_K_M": "google/gemma-3-4b-it",
             "phi4-mini:3.8b-q4_K_M": "microsoft/Phi-4-mini-instruct",
             "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
             "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
