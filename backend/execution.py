@@ -1,4 +1,15 @@
-"""Execution module for AI-Driven Testing LLM pipeline."""
+"""Execution module for AI-Driven Testing LLM pipeline.
+
+Executes the full prompt-response pipeline using a local LLM container,
+with optional iterations for refinement.
+
+This function performs the following steps:
+1. Applies preprocessing modules to the input prompt.
+2. Starts a Docker container for the selected model via the LLMManager.
+3. Sends the processed prompt to the model and receives the response.
+4. Applies postprocessing modules to the response.
+5. Saves the response as structured JSON and Markdown to archive and latest output directories.
+"""
 
 import module_manager
 from llm_manager import LLMManager
@@ -7,9 +18,8 @@ import json
 from pathlib import Path
 
 
-def execute_prompt(active_modules, prompt_data, output_file):
-    """Execute the prompt-response flow."""
-    # Process with modules
+def execute_prompt(active_modules, prompt_data, output_file, iterations=1):
+    """Execute the prompt-response flow with optional iterations."""
     prompt_data = module_manager.apply_before_modules(
         active_modules, prompt_data
     )
@@ -18,16 +28,29 @@ def execute_prompt(active_modules, prompt_data, output_file):
     manager = LLMManager()
     try:
         manager.start_model_container(prompt_data.model.id)
-        print(f"\n--- Response from {prompt_data.model.name} ---")
 
-        response_data = manager.send_prompt(prompt_data)
+        for i in range(iterations):
+            print(f"\n--- Iteration {i + 1}/{iterations} ---")
+            print(f"--- Response from {prompt_data.model.name} ---")
 
-        # Process with modules
-        module_manager.apply_after_modules(
-            active_modules, response_data, prompt_data
-        )
+            response_data = manager.send_prompt(prompt_data)
 
-        # === Save output after all modules ===
+            # Process with modules
+            module_manager.apply_after_modules(
+                active_modules, response_data, prompt_data
+            )
+
+            # Prepare for the next iteration
+            if i < iterations - 1:
+                new_source_code = (
+                    response_data.output.code or response_data.output.markdown
+                )
+                prompt_data.input.source_code = new_source_code
+                prompt_data.input.user_message = "Please review the following code. Fix any errors and improve it by adding comments and docstrings. Return only the complete, corrected Python code in a single markdown block."
+                prompt_data.rag_prompt = None
+                prompt_data.rag_sources = None
+
+        # Save output after all modules are finished
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M")
         safe_model_id = prompt_data.model.id.replace(":", "_")
         archive_dir = Path("outputs/archive") / f"{timestamp}_{safe_model_id}"

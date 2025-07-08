@@ -1,4 +1,4 @@
-"""Command-line interface module for AI-Driven Testing with export support."""
+"""Command-line interface for AI-Driven Testing pipeline with export support."""
 
 import os
 import argparse
@@ -12,7 +12,7 @@ _parsed_args = None  # Module-level cache
 
 
 def parse_arguments() -> argparse.Namespace:
-    """Parse command-line arguments including export options."""
+    """Parse command-line arguments including export and pipeline options."""
     global _parsed_args
     if _parsed_args is not None:
         return _parsed_args
@@ -40,6 +40,12 @@ def parse_arguments() -> argparse.Namespace:
     )
     parser.add_argument(
         "--modules", nargs="*", default=[], help="List of module names to run"
+    )
+    parser.add_argument(
+        "--iterations",
+        type=int,
+        default=1,
+        help="Number of times to run the generation, feeding the output back as input for refinement.",
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--num_ctx", type=int, default=4096)
@@ -157,9 +163,7 @@ def validate_export_args(args: argparse.Namespace) -> None:
         supported_formats = export_manager.get_supported_formats()
 
         if args.export_format and args.export_format not in supported_formats:
-            print(
-                f"❌ Error: Unsupported export format '{args.export_format}'"
-            )
+            print(f"❌ Error: Unsupported export format '{args.export_format}'")
             print(f"📋 Supported formats: {', '.join(supported_formats)}")
             exit(1)
 

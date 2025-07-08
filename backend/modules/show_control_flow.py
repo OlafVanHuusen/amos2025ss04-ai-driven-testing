@@ -9,7 +9,13 @@ from datetime import datetime
 
 
 class ShowControlFlow(ModuleBase):
-    """Module that visualizes control flow from code and saves it as an image."""
+    """
+    Modul zur Visualisierung des Kontrollflusses von Quellcode als Bilddatei.
+
+    Dieses Modul analysiert sowohl den Eingabe- als auch den Ausgabecode und generiert aus dem jeweiligen
+    Python-Code ein Bild des Kontrollflussgraphen. Die Visualisierungen werden automatisch mit einem
+    Zeitstempel versehen und im Verzeichnis `outputs/control_flow/` gespeichert.
+    """
 
     def applies_before(self) -> bool:
         return True

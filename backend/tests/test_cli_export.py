@@ -37,6 +37,17 @@ def test_cli_export():
                 print("Help command - would show usage")
                 continue
 
+            # For invalid arguments, expect SystemExit
+            if "invalid_format" in test_args:
+                try:
+                    args = cli.parse_arguments()
+                    print("❌ Expected SystemExit for invalid format")
+                except SystemExit as e:
+                    print(
+                        f"✅ Expected SystemExit caught (exit code: {e.code})"
+                    )
+                    continue
+
             # Parse arguments
             args = cli.parse_arguments()
 

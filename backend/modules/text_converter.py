@@ -9,7 +9,14 @@ from modules.base import ModuleBase
 
 
 class TextConverter(ModuleBase):
-    # Extracts and cleans Python code from prompts and responses
+    """
+    Extrahiert, bereinigt und speichert Python-Code-Snippets aus Prompts und LLM-Antworten.
+
+    Dieses Modul führt Vor- und Nachverarbeitung der Prompt- und Antwortdaten durch, indem es
+    Python-Codeblöcke (typischerweise in Markdown eingebettet) erkennt, formatiert und in
+    Python-Dateien schreibt. Diese Dateien können anschließend für die Ausführung oder
+    Bewertung weiterverwendet werden.
+    """
 
     preprocessing_order = 1
     postprocessing_order = 1
@@ -63,8 +70,20 @@ class TextConverter(ModuleBase):
             "from pathlib import Path\n"
             "sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path\n"
             "from prompt import *  # Import functions from prompt.py\n\n"
+            "import unittest\n\n"
         )
-        cleaned_code = import_line + clean_response_text(raw_markdown)
+        cleaned_code = clean_response_text(raw_markdown)
+        # Check if import block is already present (handle both escaped and unescaped quotes)
+        if not (
+            "sys.path.insert(0," in cleaned_code
+            and "code/extracted" in cleaned_code
+        ):
+            cleaned_code = import_line + cleaned_code
+
+        if 'if __name__ == "__main__":' not in cleaned_code:
+            cleaned_code += (
+                '\n\nif __name__ == "__main__":\n    unittest.main()\n'
+            )
 
         # 1. Save to generic path (used by executor)
         main_output_path = output_dir / "response.py"

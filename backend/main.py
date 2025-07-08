@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""Main entry point for AI-Driven Testing CLI."""
+"""
+Main entry point for the AI-driven testing framework.
+
+This module orchestrates the entire testing workflow by parsing command-line
+arguments, loading selected models and modules, and executing the test
+generation process through the configured pipeline.
+"""
 import os
 import cli
 import execution
@@ -32,10 +38,4 @@ if __name__ == "__main__":
         print(f" - {module.__class__.__name__}")
 
     # Execute the flow
-    response_content = execution.execute_prompt(
-        active_modules, prompt_data, args.output_file
-    )
-
-    # Handle export if requested
-    if response_content and (args.export_format or args.export_all):
-        cli.handle_export(args, response_content, args.output_file)
+    execution.execute_prompt(active_modules, prompt_data, args.output_file)

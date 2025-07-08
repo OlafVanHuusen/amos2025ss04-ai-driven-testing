@@ -114,8 +114,15 @@ class LLMManager:
             return
         container, _, _ = self.active_models[model_id]
         print(f"Stopping container for model {model_id}...")
-        container.stop()
-        del self.active_models[model_id]
+        try:
+            container.stop()
+        except docker.errors.NotFound:
+            print(f"Container for model {model_id} was already removed.")
+        except Exception as e:
+            print(f"Error stopping container for model {model_id}: {e}")
+        finally:
+            # Always remove from active_models tracking
+            del self.active_models[model_id]
 
     def send_prompt(self, prompt_data: PromptData) -> ResponseData:
         """
@@ -308,7 +315,7 @@ class LLMManager:
                 r = requests.get(url)
                 if r.status_code == 200:
                     print(f"Ollama API is read on port {port}!")
-                    # Zusätzliche Wartezeit für die vollständige Initialisierung
+                    # Additional timeout to ensure complete initialization
                     time.sleep(5)
                     return
             except requests.exceptions.ConnectionError:
