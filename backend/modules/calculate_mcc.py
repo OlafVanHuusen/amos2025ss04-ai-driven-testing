@@ -8,7 +8,14 @@ from modules.text_converter import TextConverter
 
 
 class CalculateMcc(ModuleBase):
-    """Berechnet die McCabe Complexity (MCC) für Python-Code mittels AST-Analyse."""
+    """
+    Modul zur Berechnung der McCabe Cyclomatic Complexity (MCC) von Python-Code mittels AST-Analyse.
+
+    Dieses Modul analysiert sowohl den Eingabecode (Prompt) als auch den vom Modell generierten
+    Ausgabecode (Response), um deren zyklomatische Komplexität zu bestimmen – ein Maß für die
+    Komplexität eines Programms basierend auf der Anzahl unabhängiger Ausführungspfade im Code.
+    Die Berechnung erfolgt durch Traversierung des abstrakten Syntaxbaums (AST).
+    """
 
     preprocessing_order = 5
     postprocessing_order = 5
@@ -32,9 +39,9 @@ class CalculateMcc(ModuleBase):
 
         try:
             mcc = get_code_complexity_sum(prompt, filename="stdin")
-            print("Calculated MCC:", mcc)
+            print("[CalculateMCC] Calculated MCC:", mcc)
         except Exception as e:
-            print(f"Could not calculate MCC for prompt: {e}")
+            print(f"[CalculateMCC] Could not calculate MCC for prompt: {e}")
             mcc = None
 
         prompt_data.mcc_complexity = mcc
@@ -54,9 +61,9 @@ class CalculateMcc(ModuleBase):
 
         try:
             mcc = get_code_complexity_sum(code, filename="stdin")
-            print("Calculated MCC:", mcc)
+            print("[CalculateMCC] Calculated MCC:", mcc)
         except Exception as e:
-            print(f"Could not calculate MCC for response: {e}")
+            print(f"[CalculateMCC] Could not calculate MCC for response: {e}")
             mcc = None
 
         response_data.output.mcc_complexity = mcc
@@ -68,7 +75,9 @@ def get_code_complexity_sum(code, filename="stdin"):
         tree = compile(code, filename, "exec", ast.PyCF_ONLY_AST)
     except SyntaxError:
         e = sys.exc_info()[1]
-        sys.stderr.write("Unable to parse %s: %s\n" % (filename, e))
+        sys.stderr.write(
+            "[CalculateMCC] Unable to parse %s: %s\n" % (filename, e)
+        )
         return 0
 
     visitor = PathGraphingAstVisitor()
