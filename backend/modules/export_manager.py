@@ -173,9 +173,9 @@ Content Length: {len(content)} characters
         metadata = ET.SubElement(root, "metadata")
         ET.SubElement(metadata, "timestamp").text = datetime.now().isoformat()
         ET.SubElement(metadata, "format").text = "xml"
-        ET.SubElement(
-            metadata, "exported_by"
-        ).text = "AI-Driven Testing ExportManager"
+        ET.SubElement(metadata, "exported_by").text = (
+            "AI-Driven Testing ExportManager"
+        )
         ET.SubElement(metadata, "content_length").text = str(len(content))
 
         # Add content

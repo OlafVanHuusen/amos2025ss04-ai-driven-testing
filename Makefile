@@ -2,7 +2,7 @@
 
 # Install development dependencies
 install-dev:
-	pip install -r requirements-dev.txt
+	pip3 install -r requirements-dev.txt
 
 # Install pre-commit hooks
 install-hooks:
