@@ -1,9 +1,9 @@
 repos:
 -   repo: https://github.com/psf/black
-    rev: 23.3.0  # Use the specific version you want
+    rev: 23.11.0  # Match the locally installed version
     hooks:
     -   id: black
-        args: [--line-length=79]
+        # Remove args since we use pyproject.toml for configuration
         exclude: ^ExampleTests/generatedTests/.*$
         # Only run on changed files
         stages: [pre-commit]

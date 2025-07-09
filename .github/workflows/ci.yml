@@ -20,9 +20,11 @@ jobs:
           auto-activate-base: false # we rely on the named env only
 
       # Run quality gates & tests inside that env
-      - name: Check formatting
+      - name: Check formatting with Black
         shell: bash -l {0}
-        run: black --check .
+        run: |
+          echo "Black version: $(black --version)"
+          black --check --diff --config pyproject.toml .
 
       - name: Lint
         shell: bash -l {0}
