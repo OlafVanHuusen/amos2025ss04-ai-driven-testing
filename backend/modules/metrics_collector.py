@@ -7,7 +7,23 @@ from modules.text_converter import TextConverter
 
 
 class MetricsCollector(ModuleBase):
-    """Sammelt und speichert Performance-Metriken wie Generierungs- und Ladezeiten sowie Syntax-Validität."""
+    """
+    Sammelt und speichert Leistungsmetriken, nachdem die Modellantwort generiert wurde.
+
+    Dieses Modul wird nach Abschluss aller anderen Verarbeitungsschritte ausgeführt. Es misst und speichert:
+      - Die syntaktische Gültigkeit des generierten Codes (über einen `compile()`-Check in Python)
+      - Die Ladezeit und Generierungszeit während der Modellausführung
+      - Metadaten des verwendeten Modells (z. B. Modellname)
+
+    Die Metriken werden als 'metrics.json' sowohl im Verzeichnis 'outputs/latest/' als auch in einem
+    zeitgestempelten Archiv unter 'outputs/archive/' gespeichert.
+
+    Abhängigkeiten:
+        - Erfordert, dass das TextConverter-Modul zuvor ausgeführt wurde, um sicherzustellen, dass der generierte Code verfügbar ist.
+
+    Rückgabewert:
+        Aktualisiertes `ResponseData`-Objekt mit gesetztem 'syntax_valid'-Flag.
+    """
 
     def __init__(self):
         self.loading_time = None
@@ -72,26 +88,13 @@ class MetricsCollector(ModuleBase):
                 with open(path, "w") as f:
                     f.write(content)
 
-    def clean_response_text(self, response_text):
-        import_index = response_text.find("import")
-        if import_index != -1:
-            response_text = response_text[import_index:]
-
-        response_text = response_text.replace("```python", "").replace(
-            "```", ""
-        )
-        for marker in ["Explanation:", "# Explanation", "This script defines"]:
-            if marker in response_text:
-                response_text = response_text.split(marker)[0]
-
-        return response_text.strip()
-
-    def check_syntax_validity(self, file_path):
+    @staticmethod
+    def check_syntax_validity(file_path):
         try:
             with open(file_path, "r") as f:
                 code = f.read()
             compile(code, str(file_path), "exec")
             return True
         except SyntaxError as e:
-            print(f"[Metrics] Syntax Error: {e}")
+            print(f"[MetricsCollector] Syntax Error: {e}")
             return False

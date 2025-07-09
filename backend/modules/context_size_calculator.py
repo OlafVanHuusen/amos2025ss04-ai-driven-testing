@@ -1,3 +1,5 @@
+"""A module to calculate token count and check against context size limits."""
+
 from modules.base import ModuleBase
 from transformers import AutoTokenizer
 from schemas import PromptData
@@ -7,19 +9,32 @@ import warnings
 
 
 class ContextSizeCalculator(ModuleBase):
-    """Berechnet die Anzahl der Tokens in Prompts und prüft die Einhaltung der maximalen Kontextgröße."""
+    """
+    Modul zur Berechnung der Tokenanzahl eines Prompts und Überprüfung der Kontextfenstergröße des Modells.
+
+    Dieses Modul wird vor der Ausführung des LLM aufgerufen und erfüllt zwei Hauptfunktionen:
+    1. Es versucht, mit einem passenden Hugging-Face-Tokenizer die tatsächliche Anzahl der Tokens im Prompt zu berechnen.
+    2. Falls kein geeigneter Tokenizer verfügbar ist, wird eine heuristische Schätzung verwendet.
+
+    Wenn die berechnete Tokenanzahl die maximal erlaubte Kontextgröße überschreitet
+    (`PromptData.input.options.num_ctx`), wird ein `ValueError` ausgelöst, um Laufzeitfehler zu vermeiden.
+    """
 
     def __init__(self):
+        """Initialize the ContextSizeCalculator."""
         self.tokenizer = None
         self.tokenizer_model_id = None
 
     def applies_before(self) -> bool:
+        """Return True as this module runs before the prompt is sent."""
         return True
 
     def applies_after(self) -> bool:
+        """Return False as this module does not run after the response."""
         return False
 
     def process_prompt(self, prompt_data: PromptData):
+        """Process the prompt to count tokens and validate context size."""
         # Get model ID from prompt data
         model_id = prompt_data.model.id
 
@@ -64,12 +79,11 @@ class ContextSizeCalculator(ModuleBase):
         return prompt_data
 
     def process_response(self, response_data, prompt_data):
+        """Return the response data unmodified."""
         return response_data
 
     def _count_tokens_with_tokenizer(self, text, model_id):
-        """
-        Count tokens using the tokenizer specific to the model
-        """
+        """Count tokens using the tokenizer specific to the model."""
         hf_model_id = self._get_huggingface_model_id(model_id)
 
         if hf_model_id is None:
@@ -87,9 +101,7 @@ class ContextSizeCalculator(ModuleBase):
         return len(tokens)
 
     def _load_tokenizer(self, hf_model_id):
-        """
-        Load tokenizer, trying local cache first, then remote download
-        """
+        """Load tokenizer, trying local cache first, then remote download."""
         # Convert model ID to directory name (replace / with _)
         local_model_name = hf_model_id.replace("/", "_")
         local_path = os.path.join(
@@ -110,6 +122,7 @@ class ContextSizeCalculator(ModuleBase):
                 warnings.warn(
                     f"[ContextSizeCalculator] Error loading local tokenizer: {e}",
                     UserWarning,
+                    stacklevel=2,
                 )
         else:
             print(
@@ -132,29 +145,28 @@ class ContextSizeCalculator(ModuleBase):
                 warnings.warn(
                     f"[ContextSizeCalculator] Error loading downloaded tokenizer: {e}",
                     UserWarning,
+                    stacklevel=2,
                 )
 
         else:
             warnings.warn(
                 f"[ContextSizeCalculator] Failed to download tokenizer for model {hf_model_id}. Consider manually adding it. For further info see: modules/context_size_calculator/README.md",
                 UserWarning,
+                stacklevel=2,
             )
             return None
 
     def _get_huggingface_model_id(self, model_id):
-        """
-        Map Ollama model ID to corresponding Hugging Face model ID
-        """
+        """Map Ollama model ID to corresponding Hugging Face model ID."""
         model_mapping = {
             "mistral:7b-instruct-v0.3-q3_K_M": "mistralai/Mistral-7B-Instruct-v0.3",
-            "deepseek-coder:6.7b-instruct-q3_K_M": "deepseek-ai/deepseek-coder-6.7b-instruct",
             "qwen2.5-coder:3b-instruct-q8_0": "Qwen/Qwen2.5-Coder-3B-Instruct",
-            "gemma3:4b-it-q4_K_M": "google/gemma-3-4b-it",
             "phi4-mini:3.8b-q4_K_M": "microsoft/Phi-4-mini-instruct",
             "tinyllama:1.1b": "TinyLlama/TinyLlama-1.1B-Chat-v0.6",
             "qwen3:4b-q4_K_M": "Qwen/Qwen3-4B",
             "openhermes:v2.5": "teknium/OpenHermes-2.5-Mistral-7B",
             "smollm2:360m": "HuggingFaceTB/smollm2-360m",
+            "starcoder2:3b": "bigcode/starcoder2-3b",
         }
 
         # Try exact match first
@@ -165,12 +177,13 @@ class ContextSizeCalculator(ModuleBase):
         warnings.warn(
             f"No match found for model_id '{model_id}', consider manually adding it. For further info see: modules/context_size_calculator/README.md",
             UserWarning,
+            stacklevel=2,
         )
         return None
 
     def _estimate_token_count(self, text):
-        """
-        Estimate token count for a given text if tokenizer is unavailable.
+        """Estimate token count for a given text if tokenizer is unavailable.
+
         This is a rough approximation - actual tokenization varies by model.
         """
         # Simple character-based heuristic (roughly 4 chars per token for English)
@@ -189,8 +202,7 @@ class ContextSizeCalculator(ModuleBase):
         return int(max(char_estimate, word_estimate, space_estimate))
 
     def _download_tokenizer(self, hf_model_id, force=False):
-        """Download and save a tokenizer for the given model_id"""
-
+        """Download and save a tokenizer for the given model_id."""
         # Get the tokenizers directory relative to this module
         tokenizers_dir = os.path.join(
             os.path.dirname(__file__),

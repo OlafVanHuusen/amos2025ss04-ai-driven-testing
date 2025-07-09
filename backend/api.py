@@ -197,8 +197,8 @@ def format_prompt_response(
         "output": {
             "code": response_data.output.code,
             "syntax_valid": response_data.output.syntax_valid,
-            "ccc_complexity": response_data.output.ccc_complexity,
-            "mcc_complexity": response_data.output.mcc_complexity,
+            "ccc_complexity_output": response_data.output.ccc_complexity,
+            "mcc_complexity_output": response_data.output.mcc_complexity,
             "lm_eval": response_data.output.lm_eval,
             "coverage_data": response_data.output.coverage_data,
         },
@@ -209,8 +209,8 @@ def format_prompt_response(
         "prompt_data": {
             "token_count": processed_prompt_data.token_count,
             "token_count_estimated": processed_prompt_data.token_count_estimated,
-            "ccc_complexity": processed_prompt_data.ccc_complexity,
-            "mcc_complexity": processed_prompt_data.mcc_complexity,
+            "ccc_complexity_input": processed_prompt_data.ccc_complexity,
+            "mcc_complexity_input": processed_prompt_data.mcc_complexity,
             "rag_sources": processed_prompt_data.rag_sources,
         },
     }

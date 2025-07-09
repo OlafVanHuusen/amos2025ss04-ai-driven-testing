@@ -7,22 +7,10 @@
       "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
-      "name": "DeepSeek",
-      "id": "deepseek-coder:6.7b-instruct-q3_K_M",
-      "license": "DeepSeek License",
-      "license_link": "https://github.com/deepseek-ai/deepseek-coder/blob/main/LICENSE-MODEL"
-    },
-    {
       "name": "Qwen2.5-coder",
       "id": "qwen2.5-coder:3b-instruct-q8_0",
       "license": "Apache 2.0 License",
       "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
-    },
-    {
-      "name": "Gemma",
-      "id": "gemma3:4b-it-q4_K_M",
-      "license": "Gemma License",
-      "license_link": "https://ai.google.dev/gemma/terms"
     },
     {
       "name": "Phi4",
@@ -54,11 +42,17 @@
       "license": "Apache 2.0 License",
       "license_link": "https://www.apache.org/licenses/LICENSE-2.0"
     },
-        {
+    {
       "name": "phi4-reasoning",
       "id": "phi4-reasoning:14b",
       "license": "MIT License",
       "license_link": "https://opensource.org/licenses/MIT"
+    },
+    {
+      "name": "StarCoder2 3B",
+      "id": "starcoder2:3b",
+      "license": "MIT License",
+      "license_link": "https://huggingface.co/bigcode/starcoder2-3b/blob/main/LICENSE"
     }
   ]
 }
