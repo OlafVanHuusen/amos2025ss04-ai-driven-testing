@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.black]
 line-length = 79  # Using 79 to match your pre-commit configuration
-target-version = ['py38']
+target-version = ['py311']
 exclude = '''
 /(
     \.git

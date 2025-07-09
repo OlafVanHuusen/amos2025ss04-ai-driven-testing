@@ -10,19 +10,19 @@ install-hooks:
 
 # Format code with Black
 format:
-	black .
+	python3 -m black .
 
 # Check code formatting without making changes
 check-format:
-	black --check --diff .
+	python3 -m black --check --diff .
 
 # Run linting
 lint:
-	flake8 .
+	python3 -m flake8 .
 
 # Run tests
 test:
-	python -m pytest
+	python3 -m pytest
 
 # Run all quality checks
 check: check-format lint test
