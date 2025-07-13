@@ -63,7 +63,8 @@ Before setting up the project, ensure you have the following installed:
 
 - **Node.js** - [Install Node.js](https://nodejs.org/)
 - **Docker** - [Install Docker](https://docs.docker.com/get-started/get-docker/)
-- **Conda** (optional, for managing Python environment) - [Install Conda](https://pypi.org/project/conda/)
+- **Conda**  - [Install Conda](https://www.anaconda.com/download/success)
+- **Git** (for cloning the project) - [Install Git](https://git-scm.com/downloads)
 
 ---
 
@@ -71,40 +72,46 @@ Before setting up the project, ensure you have the following installed:
 
 ### Clone the repository:
    ```bash
-   git clone amos2025ss04-ai-driven-testing
+   git clone https://github.com/amosproj/amos2025ss04-ai-driven-testing.git
    cd amos2025ss04-ai-driven-testing
    ```
 
 
 ### Automated Setup
 
-For quick setup, use the provided setup script:
+For quick setup, use the provided setup script (not working on windows):
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
 ```
 
-### Manual Setup
+### Manual Setup (for using the CLI)
 
-1. Set up the backend:
+1. Ensure Docker is running on your machine.
+
+2. Set up the backend:
    ```bash
    cd backend/
    conda env create -f environment.yml
    conda activate backend
    ```
 
-2. Set up the frontend:
-   ```bash
-   cd frontend/
-   npm install
-   ```
 
-3. Ensure Docker is running on your machine.
+
+
+### Manual Setup (for using the web interface)
+
+1. Ensure Docker is running on your machine
+
+2. Start the docker compose that starts both the backend and the frontend:
+    ```bash
+    docker compose up
+    ```
 
 ---
 
-## 4. Backend Setup and Usage
+## 4. Backend Information and Usage
 
 ### File Structure
 
@@ -176,19 +183,9 @@ This script:
 
 ### Getting Started
 
-1. Navigate to the frontend directory:
+1. Start the docker containers:
    ```bash
-   cd frontend/
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the development server:
-   ```bash
-   npm run start
+   docker compose up
    ```
 
 4. Open your browser and go to:
