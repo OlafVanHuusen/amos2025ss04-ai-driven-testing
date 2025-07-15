@@ -16,7 +16,7 @@ class PruneDuplicateTests(ModuleBase):
     (typischerweise `response.py`) auf doppelte Testfunktionen und doppelte `assert`-Statements.
     """
 
-    postprocessing_order = 30
+    postprocessing_order = 60
 
     def applies_before(self) -> bool:
         return False

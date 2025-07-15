@@ -17,6 +17,14 @@ class ShowControlFlow(ModuleBase):
     Zeitstempel versehen und im Verzeichnis `outputs/control_flow/` gespeichert.
     """
 
+    preprocessing_order = (
+        75 
+    )
+
+    postprocessing_order = (
+        75 
+    )
+
     def applies_before(self) -> bool:
         return True
 

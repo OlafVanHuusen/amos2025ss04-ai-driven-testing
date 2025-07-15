@@ -4,6 +4,7 @@ from typing import Union
 
 from modules.base import ModuleBase
 from schemas import PromptData, ResponseData, TestExecutionResults
+from modules.text_converter import TextConverter
 
 
 class ExecuteTests(ModuleBase):
@@ -16,13 +17,16 @@ class ExecuteTests(ModuleBase):
     gespeichert und dem Antwortobjekt hinzugefügt.
     """
 
-    postprocessing_order = 90  # Run late in the chain
+    postprocessing_order = 50  # Run late in the chain
 
     def applies_before(self) -> bool:
         return False
 
     def applies_after(self) -> bool:
         return True
+
+    def dependencies(self) -> list[type["ModuleBase"]]:
+        return [TextConverter]
 
     def process_response(
         self, response_data: ResponseData, prompt_data: PromptData

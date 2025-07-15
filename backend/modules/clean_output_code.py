@@ -22,7 +22,7 @@ class CleanOutputCode(ModuleBase):
     """
 
     postprocessing_order = (
-        95  # Run after ExecuteTests (90) to use its execution results
+        55  # Run after ExecuteTests (90) to use its execution results
     )
 
     def applies_before(self) -> bool:
@@ -55,9 +55,12 @@ class CleanOutputCode(ModuleBase):
             return response_data
 
         print("[CleanOutputCode] Errors detected, applying fixes...")
-        self._restart_with_llm_fix(
+        code = self._restart_with_llm_fix(
             prompt_path, response_path, prompt_data, response_data
         )
+        if code is not None:
+            # If the fix was successful, update the response data with the new code
+            response_data.output.code = code
         return response_data
 
     def _restart_with_llm_fix(
@@ -201,12 +204,12 @@ class CleanOutputCode(ModuleBase):
                 print(
                     "[CleanOutputCode] Maximum LLM fix attempts reached, please check the output manually"
                 )
-                return False
-            return True
+                return None
+            return response_data.output.code
 
         except Exception as e:
             print(f"[CleanOutputCode] Error during LLM fix restart: {e}")
-            return False
+            return None
 
     def _create_fixing_prompt(
         self,

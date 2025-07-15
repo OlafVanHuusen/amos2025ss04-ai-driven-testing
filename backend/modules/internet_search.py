@@ -38,7 +38,7 @@ class InternetSearch(ModuleBase):
 
     def process_prompt(self, prompt_data: PromptData) -> dict:
         print(prompt_data)
-        prompt = prompt_data.input.user_message
+        prompt = prompt_data.input.user_message + "\n" + prompt_data.input.source_code
         args = cli.parse_arguments()
         used_links = args.use_links
 

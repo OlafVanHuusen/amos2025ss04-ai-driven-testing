@@ -49,7 +49,7 @@ class IncludeProject(ModuleBase):
         return False
 
     def process_prompt(self, prompt_data: PromptData) -> PromptData:
-        query_text = prompt_data.input.user_message
+        query_text = prompt_data.input.user_message + prompt_data.input.source_code
         reset = getattr(prompt_data, "reset", False)
 
         if reset:

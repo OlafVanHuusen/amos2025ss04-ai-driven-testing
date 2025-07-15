@@ -17,8 +17,8 @@ class CalculateMcc(ModuleBase):
     Die Berechnung erfolgt durch Traversierung des abstrakten Syntaxbaums (AST).
     """
 
-    preprocessing_order = 5
-    postprocessing_order = 5
+    preprocessing_order = 97
+    postprocessing_order = 97
 
     def applies_before(self) -> bool:
         return True
