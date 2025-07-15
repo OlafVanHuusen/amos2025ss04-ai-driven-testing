@@ -598,6 +598,6 @@ in `outputs/control_flow`
 *Note: Timeout set to 1 second for demonstration purpose here*
 
 ```
-/home/olaf_van_huusen/amos_version_3/amos2025ss04-ai-driven-testing-1/backend/llm_manager.py:203: UserWarning: Timeout reached after 1 seconds. 
+/home/user/amos_version_3/amos2025ss04-ai-driven-testing-1/backend/llm_manager.py:203: UserWarning: Timeout reached after 1 seconds. 
   warnings.warn(f"Timeout reached after {request_timeout} seconds. ")
 ```
