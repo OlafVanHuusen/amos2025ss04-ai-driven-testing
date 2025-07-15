@@ -1,36 +1,15 @@
-"""Simple command-line calculator application.
+"""Sorts a list in ascending order using the bubble sort algorithm.
 
-def calculator():
-    """Run an interactive command-line calculator.
+This optimized implementation includes a flag to detect if any swaps occurred
+in a pass. If no swaps are made during an entire pass, it means the list
+is already sorted, and the algorithm terminates early.
 
-    Prompts the user to input two numbers and an operation (+, -, *, /)
-    then computes and displays the result. Handles special cases such as
-    division by zero and invalid operators.
+Args:
+    arr: The list of comparable elements to be sorted. This list is
+         modified in-place.
 
-    Returns:
-        None
-    """
-    print("Simple Calculator")
-    a = float(input("Enter first number: "))
-    op = input("Enter operator (+, -, *, /): ")
-    b = float(input("Enter second number: "))
-
-    if op == "+":
-        result = a + b
-    elif op == "-":
-        result = a - b
-    elif op == "*":
-        result = a * b
-    elif op == "/":
-        if b == 0:
-            print("Error: Division by zero")
-            return
-        result = a / b
-    else:
-        print("Invalid operator")
-        return
-
-    print("Result:", result)
-
-
-calculator()
+Examples:
+    >>> my_list = [64, 34, 25, 12, 22, 11, 90]
+    >>> bubble_sort(my_list)
+    >>> print(my_list)
+    [11, 12, 22, 25, 34, 64, 90]"""

@@ -1,20 +1,15 @@
-def bubble_sort(arr):
-    """Sort a list using the bubble sort algorithm.
+"""Sorts a list in ascending order using the bubble sort algorithm.
 
-    This implementation includes an optimization that stops the algorithm
-    when no swaps are needed, indicating that the list is already sorted.
+This optimized implementation includes a flag to detect if any swaps occurred
+in a pass. If no swaps are made during an entire pass, it means the list
+is already sorted, and the algorithm terminates early.
 
-    Args:
-        arr: The list to be sorted (modified in-place)
+Args:
+    arr: The list of comparable elements to be sorted. This list is
+         modified in-place.
 
-    Returns:
-        None: The input list is modified in-place
-    """
-    for n in range(len(arr) - 1, 0, -1):
-        swapped = False
-        for i in range(n):
-            if arr[i] > arr[i + 1]:
-                arr[i], arr[i + 1] = arr[i + 1], arr[i]
-                swapped = True
-        if not swapped:
-            break
+Examples:
+    >>> my_list = [64, 34, 25, 12, 22, 11, 90]
+    >>> bubble_sort(my_list)
+    >>> print(my_list)
+    [11, 12, 22, 25, 34, 64, 90]"""
