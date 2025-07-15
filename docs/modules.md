@@ -44,6 +44,10 @@ python main.py --model 0 --modules example_logger execute_tests calculate_ccc
 | `text_converter` | Extracts and cleans Python code from responses | ✅ | ✅ | Extracts code blocks from markdown responses and formats them with Black. Core module that saves processed code to files for other modules to use. |
 | `timeout` | Sets a default timeout for LLM requests | ✅ | ❌ | Prevents hanging on slow or non-responsive model queries. Default value is 30 seconds but can be adjusted as needed.
 
+
+
+## [🧪 Example Usage of each module](#-example-usage-of-each-module)
+
 ---
 
 ### 🧱 Module Structure
@@ -147,4 +151,453 @@ class ModuleBase(ABC):
 
 ```bash
 python main.py --modules my_module
+```
+
+### 🧪 Example Usage of each module
+
+#### Source Code
+```python
+def bubble_sort(arr):
+    """Sort a list using the bubble sort algorithm.
+
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
+
+    Args:
+        arr: The list to be sorted (modified in-place)
+
+    Returns:
+        None: The input list is modified in-place
+    """
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
+```
+
+#### User Message
+Create unit tests for the given python code
+
+#### Basic Execution
+**Command:** `python main.py --model 4 (qwen3)`
+
+#### Basic Response
+
+Here are some unit tests for the `bubble_sort` function using Python's `unittest` framework:
+
+```python
+import unittest
+
+def bubble_sort(arr):
+    """Sort a list using the bubble sort algorithm.
+
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
+
+    Args:
+        arr: The list to be sorted (modified in-place)
+
+    Returns:
+        None: The input list is modified in-place
+    """
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
+
+class TestBubbleSort(unittest.TestCase):
+    def test_sorted_list(self):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_unsorted_list(self):
+        arr = [5, 4, 3, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_already_sorted_list(self):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, using the bubble sort algorithm.
+
+    def test_with_duplicates(self):
+        arr = [3, 2, 1, 2, 3]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 2, 3, 3])
+
+    def test_empty_list(self):
+        arr = []
+        bubble_sort(arr)
+        self.assertEqual(arr, [])
+
+    def test_single_element_list(self):
+        arr = [5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [5])
+
+if __name__ == '__main__':
+    unittest.main()
+```
+
+#### Explanation:
+- The `TestBubbleSort` class contains several test cases:
+  - `test_sorted_list`: Tests a list that is already sorted.
+  - `test_unsorted_list`: Tests a list that needs to be fully sorted.
+  - `test_already_sorted_list`: Tests a list that is already sorted (should not perform any swaps).
+  - `test_with_duplicates`: Tests a list with duplicate elements.
+  - `test_empty_list`: Tests an empty list.
+  - `test_single_element_list`: Tests a list with a single element.
+
+To run these tests, simply execute the script.
+
+---
+
+## Module Results
+
+### `text_converter`
+*Note: This module is now included in all cases since it's such a basic module*
+
+**Command:** `python main.py --model 4 --module text_converter`
+
+```python
+import sys
+from pathlib import Path
+sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path
+from prompt import *  # Import functions from prompt.py
+
+import unittest
+
+import unittest
+
+def bubble_sort(arr):
+    pass
+
+    """Sort a list using the bubble sort algorithm.
+
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
+
+    Args:
+        arr: The list to be sorted (modified in-place)
+
+    Returns:
+        None: The input list is modified in-place
+    """
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
+
+class TestBubbleSort(unittest.TestCase):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+        arr = [5, 4, 3, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, using the bubble sort algorithm.
+
+        arr = [3, 2, 1, 2, 3]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 2, 3, 3])
+
+        arr = []
+        bubble_sort(arr)
+        self.assertEqual(arr, [])
+
+        arr = [5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [5])
+
+if __name__ == '__main__':
+    unittest.main()
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Result:** Syntax Error in the third assert of TestBubbleSort
+
+### `clean_output_code`
+*Note: This module will be used alongside other modules that require working code*
+
+**Command:** `python main.py --model 4 --module clean_output_code`
+
+```python
+import sys
+from pathlib import Path
+
+sys.path.insert(0, "/code/extracted")  # Add extracted dir to import path
+from prompt import bubble_sort
+
+import unittest
+
+
+class TestBubbleSort(unittest.TestCase):
+    def test_sorted_list(self):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_reversed_list(self):
+        arr = [5, 4, 3, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_already_sorted_list(self):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_with_duplicates(self):
+        arr = [3, 2, 1, 2, 3]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 2, 3, 3])
+
+    def test_empty_list(self):
+        arr = []
+        bubble_sort(arr)
+        self.assertEqual(arr, [])
+
+    def test_single_element_list(self):
+        arr = [5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [5])
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Result:** Runs all tests without errors
+
+### `calculate_ccc`
+
+**Command:** `python main.py --model 4 --module clean_output_code calculate_ccc`
+
+```
+[CalculateCCC] Using Python CCC calculator for source code
+[CalculateCCC] Calculated CCC: 293
+...
+[CalculateCCC] Python CCC calculator failed: Code not recognized as valid Python code. 
+[CalculateCCC] Using general CCC estimator for source code
+[CalculateCCC] Calculated CCC: 368
+```
+
+### `calculate_mcc`
+
+**Command:** `python main.py --model 4 --module clean_output_code calculate_mcc`
+
+```
+[CalculateMCC] Calculated input MCC: 5
+[CalculateMCC] Calculated output MCC: 8
+```
+
+
+### `context_size_calculator`
+
+**Command:** `python main.py --model 4 --module context_size_calculator`
+
+```
+[ContextSizeCalculator] Counting tokens for model: qwen3:4b-q4_K_M
+[ContextSizeCalculator] Loading tokenizer from local cache: /home/user/amos_version_3/amos2025ss04-ai-driven-testing-1/backend/modules/context_size_calculator_lib/tokenizers/Qwen_Qwen3-4B
+[ContextSizeCalculator] Token count: 169
+```
+
+### `execute_tests`
+
+**Command:** `python main.py --model 4 --module execute_tests`
+
+```json
+{
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "  File \"/code/response.py\", line 44\n    self.assertEqual(arr, [1, 2, using the bubble sort algorithm.\n                                 ^^^^^^^^^\nSyntaxError: invalid syntax. Perhaps you forgot a comma?\n",
+  "status": "failure"
+}
+```
+
+### `include_project`
+**Additional resource provided:** https://gist.github.com/aprilmintacpineda/81a571a40500982015a8ae87947298d8 (repo with code and tests for BubbleSort)
+
+**Command:** `python main.py --model 4 --module include_project text_converter`
+
+```python
+import sys
+from pathlib import Path
+sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path
+from prompt import *  # Import functions from prompt.py
+
+import unittest
+
+import unittest
+
+class TestBubbleSort(unittest.TestCase):
+        arr = [1, 2, 3]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3])
+        arr = [3, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3])
+        arr = [1, 2, 3]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3])
+        arr = []
+        bubble_sort(arr)
+        self.assertEqual(arr, [])
+        arr = [5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [5])
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Result:** Simpler Test, but working right out of the box
+
+### `internet_search`
+
+**Basic command:** `python main.py --model 4 --module text_converter internet_search`
+
+```python
+def bubble_sort(arr):
+    """Sort a list using the bubble sort algorithm.
+
+    This implementation includes an optimization that stops the algorithm
+    when no swaps are needed, indicating that the list is already sorted.
+
+    Args:
+        arr: The list to be sorted (modified in-place)
+
+    Returns:
+        None: The input list is modified in-place
+    """
+    for n in range(len(arr) - 1, 0, -1):
+        swapped = False
+        for i in range(n):
+            if arr[i] > arr[i + 1]:
+                arr[i], arr[i + 1] = arr[i + 1], arr[i]
+                swapped = True
+        if not swapped:
+            break
+```
+
+**Result:** Prompt + Internet search results are too big for the default context window, resulting in the LLM returning the source_code as the answer.
+
+
+**Adjusted command:** `python main.py --model 4 --module text_converter internet_search context_size_calculator --num_ctx 7000`
+*(Setting context windows to 7000 and testing wether the context window is still too small)*
+
+```python
+import sys
+from pathlib import Path
+sys.path.insert(0, '/code/extracted')  # Add extracted dir to import path
+from prompt import *  # Import functions from prompt.py
+
+import unittest
+
+import unittest
+
+
+class TestBubbleSort(unittest.TestCase):
+    def test_sorted_array(self):
+        arr = [1, 2, 3, 4, 5]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_reversed_array(self):
+        arr = [5, 4, 3, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 3, 4, 5])
+
+    def test_unsorted_array(self):
+        arr = [5, 1, 4, 2, 8]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 4, 5, 8])
+
+    def test_empty_array(self):
+        arr = []
+        bubble_sort(arr)
+        self.assertEqual(arr, [])
+
+    def test_single_element_array(self):
+        arr = [42]
+        bubble_sort(arr)
+        self.assertEqual(arr, [42])
+
+    def test_array_with_duplicates(self):
+        arr = [3, 2, 2, 1]
+        bubble_sort(arr)
+        self.assertEqual(arr, [1, 2, 2, 3])
+
+
+if __name__ == "__main__":
+    unittest.main()
+```
+
+**Result:** Perfect result
+
+### `lm_eval_runner`
+*Note: Not really a module, more like a standalone benchmark for LLMs, hence not examplified here*
+
+### `metrics_collector`
+
+**Command:** `python main.py --model 4 --module metrics_collector`
+
+```json
+{
+  "Model": "Qwen3",
+  "Syntax Valid": false,
+  "Loading Time (s)": 30.2,
+  "Generation Time (s)": 30.2
+}
+```
+
+### `prune_duplicate_tests`
+
+**Command:** `python main.py --model 4 --module clean_output_code prune_duplicate_tests`
+
+```
+Pruning duplicate tests and asserts:
+Original number of tests found: 6
+After pruning duplicates: 6 tests remaining
+
+Original number of assert statements: 6
+After pruning duplicates: 4 assert statements remaining
+```
+
+*Note: Deleted two asserts wrongly according to log, didn't delete anything in the end actually*
+
+### `show_control_flow`
+**Command:** `python main.py --model 4 --module clean_output_code show_control_flow`
+
+would store an image like ![image cant be loaded](https://py2cfg.readthedocs.io/en/latest/_static/fib_cfg.svg)
+in `outputs/control_flow`
+
+### `timeout`
+
+**Command:** `python main.py --model 4 --module timeout`
+
+*Note: Timeout set to 1 second for demonstration purpose here*
+
+```
+/home/olaf_van_huusen/amos_version_3/amos2025ss04-ai-driven-testing-1/backend/llm_manager.py:203: UserWarning: Timeout reached after 1 seconds. 
+  warnings.warn(f"Timeout reached after {request_timeout} seconds. ")
 ```
