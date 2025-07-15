@@ -1,0 +1,45 @@
+Title	URL	Assignees	Status	Estimated size	Real size	Labels
+Check Docker: streamline build process	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/246	Moaiadsu, OlafVanHuusen	Product Backlog	3		
+(Module:) Output Exporter	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/164	Moaiadsu	Product Backlog	3		Module
+Module: Check output for code coverage of the tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/172	Moaiadsu	Product Backlog	5		Module
+Research: retest LLMs with Tessas module	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/228		Product Backlog			Research
+Use HPC to train our own LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/196		Product Backlog			Own LLM
+Refactor: add better logging or errors	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/132		Product Backlog			
+Use HPC to run training script	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/211		Product Backlog	3		Own LLM
+Refactor: Json in API	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/130		Product Backlog			duplicate
+Refactor: Json in Frontend	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/129		Product Backlog			duplicate, Frontend
+Research: should we change our embbeding	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/208		Product Backlog			Research
+Fixing lm_eval_runner Model Alignment	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/169		Product Backlog			
+Module: Detect Edgecase accuracy of LLM research	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/175		Product Backlog			Module
+Module: Code Complexity: Complexity Measurement Tool (CMT)	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/73		Product Backlog	3		Module
+Module: Code Complexity: CM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/76		Product Backlog			Module
+Module(LLM performance): look at generated "Equivalence partitioning" classes	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/109		Product Backlog			Module
+Module: Flaky Test Identifier: Detect and flag non-deterministic/generated tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/173		Product Backlog			Module
+Module: Add security analyzer module for generated code	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/110		Product Backlog			Module
+Module: Spell checker	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/78		Product Backlog			Module
+Frontend: Set Parameters for Modules	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/215		Product Backlog			Frontend
+Finalize Architecture Documentation	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/231	JonasBrue	Feature Archive	3	5	Homework, IMPORTANT
+Finalize: Bill of Material	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/232	Biranavan-Parameswaran	Feature Archive	3	3	Homework, IMPORTANT
+Finalize User/Build/Design Documentation	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/244	theidkamp	Feature Archive	3	3	Homework, IMPORTANT
+Refactor: clean the wiki	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/230	PeppermintCoding123	Feature Archive	3	3	IMPORTANT
+Demoday Prep: Cheat sheet	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/247	adititakale01, JonasBrue, OlafVanHuusen, PeppermintCoding123	Feature Archive	3	5	IMPORTANT
+Research: Evaluate the contribution of the moduls for the output	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/229	OlafVanHuusen	Feature Archive	3	3	IMPORTANT, Research
+Homework: create Demo video	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/220	OlafVanHuusen, PeppermintCoding123, theidkamp	Feature Archive	5	8	Homework, IMPORTANT
+Onboard and Test new LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/171	Biranavan-Parameswaran	Feature Archive	2	2	
+Homework: Create 3 Demo Use cases	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/216	OlafVanHuusen	Feature Archive	2	2	Homework, IMPORTANT
+Enable Output to Reinput for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/146	adititakale01	Feature Archive	5	5	
+Refactor: clean repo	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/131	theidkamp	Feature Archive	5	3	IMPORTANT
+Onboard and Test new LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/218	adititakale01	Feature Archive	2	3	
+Frontend: Display Outputs of Selected Modules	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/214	Biranavan-Parameswaran	Feature Archive	3	5	Frontend
+Frontend: Upload .py files through the UI	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/236	Biranavan-Parameswaran	Feature Archive	3	3	Frontend
+Acquire English-Dataset for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/194	JonasBrue	Feature Archive	2	2	Own LLM
+Homework: create Demo slide	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/217	JonasBrue, PeppermintCoding123	Feature Archive	3	5	Homework, IMPORTANT
+Module: Detect redundant/duplicate test cases	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/108	PeppermintCoding123	Feature Archive	3	3	Module
+Refactor: Readme files	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/225	OlafVanHuusen	Feature Archive	2	2	IMPORTANT
+Clean up output code	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/190	OlafVanHuusen	Feature Archive	5	5	
+Set prerequisite for Modules	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/127	adititakale01, PeppermintCoding123	Feature Archive	3	3	
+Module: execute Tests	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/191	theidkamp	Feature Archive	5	5	Module
+Research and Run first project on HPC	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/195	PeppermintCoding123	Feature Archive	3	5	IMPORTANT, Own LLM, Research
+Use metrics to compare 1b, 3b, 7b and maybe 14b models	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/197	Biranavan-Parameswaran	Feature Archive	8	8	IMPORTANT
+Acquire UnitTest-Dataset for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/209	JonasBrue	Feature Archive	3	3	Own LLM
+Acquire Python-Dataset for LLM	https://github.com/amosproj/amos2025ss04-ai-driven-testing/issues/210	JonasBrue	Feature Archive	3	3	Own LLM
